@@ -20,7 +20,7 @@ set -o pipefail
 GOOS=linux 
 VERSION=master
 PKG=github.com/heptio/gimbal/discovery
-OUTPUT_DIR=../_output/linux/amd64
+OUTPUT_DIR=./_output/bin/linux/amd64
 BIN=kubernetes-discoverer
 GOARCH=linux-amd64
 GIT_SHA=
