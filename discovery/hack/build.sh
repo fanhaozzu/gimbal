@@ -17,7 +17,14 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-
+GOOS=in 
+VERSION=master
+PKG=github.com/heptio/gimbal/discovery
+OUTPUT_DIR=/output/in/
+BIN=kubernetes-discoverer
+GOARCH=linux-amd64
+GIT_SHA=
+GIT_DIRTY=
 if [ -z "${PKG}" ]; then
     echo "PKG must be set"
     exit 1
