@@ -47,7 +47,16 @@ func NewClientWithQPS(masterUrl string, kubeCfgFile string, logger *logrus.Logge
 func buildConfig(masterUrl string, kubeCfgFile string, logger *logrus.Logger) (*rest.Config, error) {
 	if kubeCfgFile != "" {
 		logger.Infof("Using OutOfCluster k8s config with kubeConfigFile: %s", kubeCfgFile)
-		config, err := clientcmd.BuildConfigFromFlags(masterUrl, kubeCfgFile)
+		config, err := clientcmd.BuildConfigFromFlags("", kubeCfgFile)
+		if err != nil {
+			return nil, err
+		}
+
+		return config, nil
+	}
+	if masterUrl != "" {
+		logger.Infof("Using k8s master url: %s", masterUrl)
+		config, err := clientcmd.BuildConfigFromFlags(masterUrl, "")
 		if err != nil {
 			return nil, err
 		}
