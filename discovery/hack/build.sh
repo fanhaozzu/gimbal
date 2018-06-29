@@ -17,10 +17,10 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-GOOS=in 
+GOOS=linux 
 VERSION=master
 PKG=github.com/heptio/gimbal/discovery
-OUTPUT_DIR=/output/in/
+OUTPUT_DIR=../_output/linux/amd64
 BIN=kubernetes-discoverer
 GOARCH=linux-amd64
 GIT_SHA=
@@ -58,8 +58,6 @@ else
 fi
 
 LDFLAGS="-X ${PKG}/pkg/buildinfo.Version=${VERSION}"
-LDFLAGS="${LDFLAGS} -X ${PKG}/pkg/buildinfo.GitSHA=${GIT_SHA}"
-LDFLAGS="${LDFLAGS} -X ${PKG}/pkg/buildinfo.GitTreeState=${GIT_TREE_STATE}"
 
 if [[ -z "${OUTPUT_DIR:-}" ]]; then
   OUTPUT_DIR=.
@@ -71,6 +69,6 @@ fi
 
 go build -i \
     -o ${OUTPUT} \
-    -installsuffix "static" \
+    -a -installsuffix cgo \
     -ldflags "${LDFLAGS}" \
     ${PKG}/cmd/${BIN}
